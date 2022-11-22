@@ -1,5 +1,11 @@
-/target/
-/.idea/
+## ide
+**/.idea
 *.iml
-jeecg-boot-module-demo
 rebel.xml
+
+## backend
+**/target
+**/logs
+
+## front
+**/*.lock
