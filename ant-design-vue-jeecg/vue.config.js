@@ -14,10 +14,18 @@ module.exports = {
    */
   // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   productionSourceMap: false,
-
-
+  //qiankuan打包时放开
+  //outputDir: "../dist/main",
+  // 多入口配置
+  // pages: {
+  //   index: {
+  //     entry: 'src/main.js',
+  //     template: 'public/index.html',
+  //     filename: 'index.html',
+  //   }
+  // },
   //打包app时放开该配置
-  //publicPath:'./',
+  //publicPath:'/',
   configureWebpack: config => {
     //生产环境取消 console.log
     if (process.env.NODE_ENV === 'production') {
@@ -31,9 +39,6 @@ module.exports = {
       .set('@assets', resolve('src/assets'))
       .set('@comp', resolve('src/components'))
       .set('@views', resolve('src/views'))
-      .set('@layout', resolve('src/layout'))
-      .set('@static', resolve('src/static'))
-      .set('@mobile', resolve('src/modules/mobile'))
 
     //生产环境，开启js\css压缩
     if (process.env.NODE_ENV === 'production') {
@@ -51,6 +56,19 @@ module.exports = {
       .use()
       .loader('file-loader')
       .end()
+
+    // 编译vxe-table包里的es6代码，解决IE11兼容问题
+    config.module
+      .rule('vxe')
+      .test(/\.js$/)
+      .include
+        .add(resolve('node_modules/vxe-table'))
+        .add(resolve('node_modules/vxe-table-plugin-antd'))
+        .end()
+      .use()
+      .loader('babel-loader')
+      .end()
+
   },
 
   css: {
@@ -68,7 +86,16 @@ module.exports = {
   },
 
   devServer: {
-    port: 3000,
+    port: 80,
+    // hot: true,
+    disableHostCheck: true,
+    // overlay: {
+    //     warnings: false,
+    //     errors: true,
+    // },
+    // headers: {
+    //     'Access-Control-Allow-Origin': '*',
+    // },
     proxy: {
      /* '/api': {
         target: 'https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro', //mock API接口系统
@@ -78,8 +105,10 @@ module.exports = {
           '/jeecg-boot': ''  //默认所有请求都加了jeecg-boot前缀，需要去掉
         }
       },*/
+      /* 注意：jeecgboot前端做了改造，此处不需要配置跨域和后台接口（只需要改.env相关配置文件即可）
+          issues/3462 很多人此处做了配置，导致刷新前端404问题，请一定注意*/
       '/jeecg-boot': {
-        target: 'http://localhost:8080', //请求本地 需要jeecg-boot后台项目
+        target: 'http://localhost:8080',
         ws: false,
         changeOrigin: true
       },
