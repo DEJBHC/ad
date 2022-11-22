@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.finer.erp.stock.mapper.StkStatisticsMapper">
+
+
+	<select id="selectIoDaySumWmb" parameterType="java.lang.String" resultType="io.finer.erp.stock.vo.StkIoDaySumWmbVo">
+		SELECT *
+		  FROM (SELECT CONCAT(d.date, i.id) id, d.date, i.warehouse_id, i.material_id, i.batch_no, IFNULL(ss.unit_id, ms.unit_id) unit_id,
+					   MAX(m.code) material_code, MAX(m.model) material_model,
+					   IFNULL(MAX(s.in_qty),0) in_qty, IFNULL(MAX(s.in_cost),0) in_cost, IFNULL(MAX(s.out_qty),0) out_qty, IFNULL(MAX(s.out_cost),0) out_cost,
+					   IFNULL(MAX(ms.begin_qty),0) + IFNULL(SUM(ss.in_qty),0) -  IFNULL(SUM(ss.out_qty),0) bal_qty,
+					   IFNULL(MAX(ms.begin_cost),0) + IFNULL(SUM(ss.in_cost),0) -  IFNULL(SUM(ss.out_cost),0) bal_cost
+				  FROM bas_date d
+				 CROSS JOIN stk_inventory i ON  d.date BETWEEN #{params.beginDate} AND #{params.endDate} AND i.is_closed = 0
+				 INNER JOIN bas_material m ON i.material_id = m.id
+				  LEFT JOIN stk_io_day_sum s ON d.date = s.bill_date AND i.warehouse_id = s.warehouse_id AND i.material_id = s.material_id AND i.batch_no = s.batch_no
+				  LEFT JOIN stk_io_day_sum ss ON ss.bill_date BETWEEN fn_first_day(d.date) AND d.date AND i.warehouse_id = ss.warehouse_id AND i.material_id = ss.material_id AND i.batch_no = ss.batch_no
+				  LEFT JOIN stk_io_sum ms ON ms.`year` = YEAR(d.date) AND ms.`month` = MONTH(d.date) AND i.warehouse_id = ms.warehouse_id AND i.material_id = ms.material_id AND i.batch_no = ms.batch_no
+				 WHERE ss.unit_id IS NOT NULL OR ms.unit_id IS NOT NULL
+				 GROUP BY d.date, i.id, i.warehouse_id, i.material_id, i.batch_no, IFNULL(ss.unit_id, ms.unit_id)) t
+	 ${ew.customSqlSegment}
+	 ORDER BY warehouse_id, material_id, batch_no, unit_id, `date`
+	</select>
+</mapper>
