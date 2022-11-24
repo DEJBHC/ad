@@ -298,12 +298,11 @@ yarn install
 ```bash
 yarn run serve
 ```
-
-# 编译项目
+- 编译项目
 ```bash
 yarn run build
 ```
-# Lints and fixes files
+- Lints and fixes files
 ```bash
 yarn run lint
 ```
