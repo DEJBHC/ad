@@ -34,7 +34,7 @@
             <artifactId>jeecg-erp-core</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}\..\..\jeecg-module-erp\lib\jeecg-erp-core-1.0.0.jar</systemPath>
+            <systemPath>${pom.basedir}/../../jeecg-module-erp/lib/jeecg-erp-core-1.0.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>io.finer.jeecg</groupId>
@@ -53,6 +53,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--设置为true，以便把本地的system的jar也包括进来-->
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
             </plugin>
         </plugins>
     </build>

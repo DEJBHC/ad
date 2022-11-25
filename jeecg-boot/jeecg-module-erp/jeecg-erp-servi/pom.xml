@@ -31,12 +31,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.jeecgframework</groupId>
-            <artifactId>autopoi</artifactId>
-            <version>1.4.4</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.jeecgframework.boot</groupId>
             <artifactId>jeecg-boot-base-core</artifactId>
         </dependency>
@@ -51,7 +45,7 @@
             <artifactId>jeecg-erp-core</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}\..\lib\jeecg-erp-core-1.0.0.jar</systemPath>
+            <systemPath>${pom.basedir}/../lib/jeecg-erp-core-1.0.0.jar</systemPath>
         </dependency>
     </dependencies>
 

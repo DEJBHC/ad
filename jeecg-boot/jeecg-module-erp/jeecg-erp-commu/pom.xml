@@ -47,14 +47,14 @@
             <artifactId>jeecg-erp-core</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}\..\lib\jeecg-erp-core-1.0.0.jar</systemPath>
+            <systemPath>${pom.basedir}/../lib/jeecg-erp-core-1.0.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>io.finer.jeecg</groupId>
             <artifactId>jeecg-third-api</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${basedir}\..\lib\jeecg-third-api-1.0.0.jar</systemPath>
+            <systemPath>${pom.basedir}/../lib/jeecg-third-api-1.0.0.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
