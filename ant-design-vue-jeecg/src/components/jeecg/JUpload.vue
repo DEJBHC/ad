@@ -10,6 +10,7 @@
     </div>
     <!--  ---------------------------- end 图片左右换位置 ------------------------------------- -->
 
+    <!--20221208 cfm add for: 在线文件浏览, 增加@download、showUploadList-->
     <a-upload
       name="file"
       :multiple="multiple"
@@ -23,6 +24,8 @@
       :returnUrl="returnUrl"
       :listType="complistType"
       @preview="handlePreview"
+      @download="handleDownload"
+      :showUploadList="{showRemoveIcon: true, showDownloadIcon: true}"
       :class="{'uploadty-disabled':disabled}">
       <template>
         <div v-if="isImageComp">
@@ -316,14 +319,25 @@
         //如有需要新增 删除逻辑
         console.log(file)
       },
-      handlePreview(file){
-        if(this.fileType === FILE_TYPE_IMG){
+      handlePreview(file) {
+        if (this.fileType === FILE_TYPE_IMG) {
           this.previewImage = file.url || file.thumbUrl;
           this.previewVisible = true;
-        }else{
-          location.href=file.url
+      // begin-20221208 cfm modi: 在线文件浏览
+      //   }else{
+      //     location.href=file.url
+      //   }
+      // },
+        } else if (file.url) { // begin-20221208 cfm modi: 在线文件浏览
+          let url = window._CONFIG['onlinePreviewDomainURL'] + '?url=' + encodeURIComponent(file.url);
+          window.open(url, '_blank');
         }
       },
+      handleDownload(file) {
+        location.href = file.url;
+      },
+      // end-20221208 cfm modi: 在线文件浏览
+
       handleCancel(){
         this.previewVisible = false;
       },
@@ -394,7 +408,7 @@
           this.moveDisplay = 'none';
         });
       }
-    
+
       let picList = document.getElementById(this.containerId)?document.getElementById(this.containerId).getElementsByClassName('ant-upload-list-picture-card'):[];
       if(picList && picList.length>0){
         picList[0].addEventListener('mouseover',(ev)=>{
