@@ -1,7 +1,5 @@
 const path = require('path')
 const CompressionPlugin = require("compression-webpack-plugin")
-//20221126 cfm add: 加载速度优化
-const webpack = require('webpack')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -35,12 +33,6 @@ module.exports = {
     }
   },
   chainWebpack: (config) => {
-    //20221126 cfm add: 加载速度优化
-    // 移除prefetch插件，它是用来在浏览器加载完页面后，利用空闲时间预获取将可能访问的内容
-    config.plugins.delete('prefetch');
-    // 按需加载moment中文语言包
-    config.plugin('ContextReplacementPlugin').use(webpack.ContextReplacementPlugin, [/moment[/\\]locale$/, /zh-cn/]);
-
     config.resolve.alias
       .set('@$', resolve('src'))
       .set('@api', resolve('src/api'))
@@ -55,10 +47,6 @@ module.exports = {
           threshold: 10240, // 对超过10k的数据压缩
           deleteOriginalAssets: false // 不删除源文件
         }))
-
-      //20221126 cfm add: 加载速度优化
-      // 解决打包后chunk.js文件过多问题：maxChunks为生成的最多文件数
-      config.plugin('chunkPlugin').use(webpack.optimize.LimitChunkCountPlugin, [{maxChunks: 5, minChunkSize: 10000}])
     }
 
     // 配置 webpack 识别 markdown 为普通的文件
