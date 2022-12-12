@@ -1,6 +1,6 @@
 const path = require('path')
 const CompressionPlugin = require("compression-webpack-plugin")
-//20221126 cfm add: 加载速度优化 
+//20221126 cfm add: 加载速度优化
 const webpack = require('webpack')
 
 function resolve(dir) {
