@@ -8,6 +8,7 @@ import router from './router'
 import store from './store/'
 import { VueAxios } from "@/utils/request"
 
+//20221126 cfm: 加载速度优化，生产环境可去掉引用antd-online-mini（package.json中也要删除）
 require('@jeecg/antd-online-mini')
 require('@jeecg/antd-online-mini/dist/OnlineForm.css')
 
