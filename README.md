@@ -1,14 +1,14 @@
 Finer 进销存系统
 ===============
 
-当前最新版本： 1.0.0（发布日期：2022-11-22）
+当前最新版本： 1.0.1（发布日期：2022-12-15）
 
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)]()
 [![](https://img.shields.io/badge/Author-FINER团队-orange.svg)]()
 [![](https://img.shields.io/badge/version-1.0.0-brightgreen.svg)]()
 
-升级说明：v1.0.0对v0.5.0做了重大重构，难于平滑升级！！！
+升级说明：v1.0对v0.5 做了重大重构，难于平滑升级！！！
 
 介绍
 -----------------------------------
