@@ -91,7 +91,8 @@ export default {
 
       // update-begin-author:sunjianlei date:20210409 for: 修复动态功能测试菜单、带参数菜单标题错误、展开错误的问题
       // 包含冒号的是动态菜单
-      if (this.selectedKeys[0].includes(':')) {
+      // 20221201 cfm del for: 三级菜单选中后未保持展开
+      // if (this.selectedKeys[0].includes(':')) {
         let selectedKey = this.$route.fullPath
         this.selectedKeys = [selectedKey]
         let newOpenKeys = []
@@ -99,7 +100,8 @@ export default {
         if (newOpenKeys.length > 0) {
           openKeys = newOpenKeys.reverse()
         }
-      }
+      // 20221201 cfm del for: 三级菜单选中后未保持展开
+      // }
       // update-end-author:sunjianlei date:20210409 for: 修复动态功能测试菜单、带参数菜单标题错误、展开错误的问题
 
       //update-begin-author:taoyan date:20190510 for:online表单菜单点击展开的一级目录不对
